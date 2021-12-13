@@ -1,23 +1,38 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CustomerService } from '../services/customer.service';
 
 @Component({
   selector: 'app-fetch-data',
   templateUrl: './fetch-data.component.html'
 })
-export class FetchDataComponent {
-  public forecasts: WeatherForecast[];
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<WeatherForecast[]>(baseUrl + 'weatherforecast').subscribe(result => {
-      this.forecasts = result;
+export class FetchDataComponent implements OnInit {
+  customers: Customer[];
+  baseurl: string;
+
+  constructor(private customerService: CustomerService, http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+
+    this.baseurl = baseUrl;
+    http.get<Customer[]>(baseUrl + 'customers').subscribe(result => {
+      this.customers = result;
     }, error => console.error(error));
+  }
+
+  ngOnInit(): void {
+
+  }
+
+
+  onDelete(id: Number) {
+    this.customerService.onDelete(this.baseurl, id);
   }
 }
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
+
+export interface Customer {
+  IdNumber: number;
+  Username: string;
+  Email: string;
+  Birthdate: string;
 }

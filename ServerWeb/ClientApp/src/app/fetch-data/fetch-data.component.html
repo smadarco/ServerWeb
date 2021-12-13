@@ -1,24 +1,25 @@
-<h1 id="tableLabel">Weather forecast</h1>
+<h1 id="tableLabel">List of Customers</h1>
+<a [routerLink]="['/customer',0]" class="btn btn-primary mt-5 mb-3 ">Add Customer</a>
 
-<p>This component demonstrates fetching data from the server.</p>
-
-<p *ngIf="!forecasts"><em>Loading...</em></p>
-
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="customers">
   <thead>
     <tr>
-      <th>Date</th>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Summary</th>
+      <th>id</th>
+      <th>Username</th>
+      <th>Email</th>
+      <th>Birthdate</th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.date }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td>
+    <tr *ngFor="let item of customers">
+      <td>{{ item.idNumber }}</td>
+      <td>{{ item.username }}</td>
+      <td>{{ item.email }}</td>
+      <td>{{ item.birthdate | date:'fullDate'}}</td>
+      <td><a [routerLink]="['/customer',item.idNumber]">Edit</a> </td>
+      <td><button (click)="onDelete(item.idNumber)">x</button></td>
     </tr>
   </tbody>
 </table>
