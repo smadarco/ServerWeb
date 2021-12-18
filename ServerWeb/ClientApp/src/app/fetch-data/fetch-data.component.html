@@ -1,5 +1,5 @@
 <h1 id="tableLabel">List of Customers</h1>
-<a [routerLink]="['/customer',0]" class="btn btn-primary mt-5 mb-3 ">Add Customer</a>
+<a [routerLink]="['/customer','']" class="btn btn-primary mt-5 mb-3 ">Add Customer</a>
 
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="customers">
   <thead>
@@ -18,8 +18,9 @@
       <td>{{ item.username }}</td>
       <td>{{ item.email }}</td>
       <td>{{ item.birthdate | date:'fullDate'}}</td>
-      <td><a [routerLink]="['/customer',item.idNumber]">Edit</a> </td>
-      <td><button (click)="onDelete(item.idNumber)">x</button></td>
+      <td><a [routerLink]="['/customer',item.id]">Edit</a> </td>
+      <td><a [routerLink]="['/fetch-data',item.id]">x</a></td>
     </tr>
   </tbody>
 </table>
+

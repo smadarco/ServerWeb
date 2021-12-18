@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable, pipe } from 'rxjs';
 
 
 @Injectable({
@@ -15,43 +16,32 @@ export class CustomerService {
 
   }
 
+ /* GetAll(baseUrl): Observable<any> {
+    return this.httpc.get<Customer[]>(baseUrl + 'customers');
+  }*/
 
-  onGet(baseUrl, id: Number) {
+  onGet(baseUrl, id: string): Observable<any> {
+    return this.httpc.get<Customer[]>(baseUrl + 'Getby/' + id);
 
-    this.httpc.get<Customer[]>(baseUrl + 'Getby/' + id).subscribe(result => {
-      this.customers = result;
-      return this.customers;
-
-    }, error => console.error(error));
-    return this.customers;
   }
 
 
-  onAdd(baseUrl, customer: Customer) {
+  onEditOrAdd(baseUrl, customer: Customer[]) {
     this.httpc.post<Customer[]>(baseUrl + 'customers', customer).subscribe(result => {
-      this.customers = result;
-    }, error => console.error(error));
-  }
-
-  onEdit(baseUrl, customer: Customer) {
-    this.httpc.post<Customer[]>(baseUrl + 'customers', customer).subscribe(result => {
-      this.customers = result;
     }, error => console.error(error));
   }
 
 
-  onDelete(baseUrl, id: Number) {
-    this.httpc.post<Customer[]>(baseUrl + 'customers', id).subscribe(result => {
-      this.customers = result;
-    }, error => console.error(error));
+  onDelete(baseUrl, id: string): Observable<any> {
+    return this.httpc.delete<Customer[]>(baseUrl + 'delete/' + id);
   }
+
 
 }
-
-
 export interface Customer {
-  IdNumber: number;
-  Username: string;
-  Email: string;
-  Birthdate: string;
+  //Id: string;
+  idNumber: string;
+  username: string;
+  email: string;
+  birthdate: string;
 }

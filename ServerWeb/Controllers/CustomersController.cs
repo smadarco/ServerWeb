@@ -37,29 +37,42 @@ namespace ServerWeb.Controllers
 
         [HttpGet("Getby/{id}")]
         [Route("[controller]")]
-        public IEnumerable<Customer> Getby(int id)
+        public IEnumerable<Customer> Getby(string id)
         {
-            var result= _customersCollection.Find(s => s.IdNumber == id).ToList();
-            if (result != null)
-                return result;
-            else
-            {
-                return (IEnumerable<Customer>)NotFound($"Customer with id:{id} was not found");
-        
-            }
+            return _customersCollection.Find(s => s.Id == id).ToList();
 
-
+            
         }
 
         [HttpPost]
         [Route("[controller]")]
-        public void Post(Customer customerNew)
+        public void Post(Customer[] customer)
+        {
+            if (customer[0].Id != "")
+            {
+                var result = _customersCollection.Find(s => s.Id == customer[0].Id).ToList();
+                if (result.Count != 0)//edit
+                {
+                    _customersCollection.ReplaceOne(b => b.Id == result[0].Id, customer[0]);
+                }
+            }
+            else//add
+            {
+                _customersCollection.InsertOne(customer[0]);
+            }
+           
+        }
+
+        [HttpDelete("delete/{id}")]
+        [Route("[controller]")]
+        public void Delete(string id)
         {
 
-             _customersCollection.InsertOne(customerNew);
+            _customersCollection.DeleteOne(s => s.Id == id);
+
         }
 
 
+        }
     }
-}
 

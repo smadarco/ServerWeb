@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { CustomerComponent } from './customer/customer.component';
 
+import { DpDatePickerModule } from '@angular/';
 
 @NgModule({
   declarations: [
@@ -24,10 +25,12 @@ import { CustomerComponent } from './customer/customer.component';
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    DpDatePickerModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'customer/:id', component: CustomerComponent },
+      { path: 'fetch-data/:id', component: FetchDataComponent },
     ])
   ],
   providers: [],

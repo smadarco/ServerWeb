@@ -12,21 +12,23 @@ namespace ServerWeb
     public class Customer
     {
         [BsonId]
-        public ObjectId Id { get; set; }
+        [BsonRepresentation(MongoDB.Bson.BsonType.ObjectId)]
+         public string Id { get; set; }
 
-        
 
+       
         [BsonElement("id_number")]
-        public Int32 IdNumber { get; set; }
+      
+        public string idNumber { get; set; }
 
         [BsonElement("username")]
-        public string Username { get; set; }
+        public string username { get; set; }
 
         [BsonElement("email")]
-        public string Email { get; set; }
+        public string email { get; set; }
 
         [BsonElement("birthdate")]
-        public DateTime Birthdate { get; set; }
+        public DateTime birthdate { get; set; }
     }
 }
 

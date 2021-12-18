@@ -11,60 +11,73 @@ import { CustomerService } from '../services/customer.service';
 
 
 export class CustomerComponent implements OnInit {
-  id: Number;
+  id: string;
   header: string;
-  //customers: Customer[];
   baseurl: string;
+  customers: Customer[];
+  customer: Customer = { "Id": "", "idNumber": "", "birthdate": "", "email": "", "username": "" };
 
-  customer: Customer[] =
-    [{
-      IdNumber: 0,
-      Username: '',
-      Email: '',
-      Birthdate: ''
-    }]
-
+  loading: boolean = false;
+  errorMessage;
 
   constructor(private router: Router, private route: ActivatedRoute, http: HttpClient, @Inject('BASE_URL') baseUrl: string,
     private customerService: CustomerService) {
-    this.id = +this.route.snapshot.paramMap.get('id');
+    this.id = this.route.snapshot.paramMap.get('id');
     this.baseurl = baseUrl;
-
   }
 
   ngOnInit(): void {
 
-    this.header = this.id === 0 ? 'Add customer' : 'Edit customer';
+    this.loading = true;
+    this.errorMessage = "";
+    this.header = this.id === "" ? 'Add customer' : 'Edit customer';
 
-    if (this.id != 0) {
-      this.customer = this.customerService.onGet(this.baseurl, this.id);
-      console.log(this.customer);
+    if (this.id != "") {
+      this.customerService.onGet(this.baseurl, this.id)
+        .subscribe(
+          (response) => {
+            console.log('response received')
+            this.customers = response;
+            this.customer = this.customers[0];
+          },
+          (error) => {
+            console.error('Request failed with error')
+            this.errorMessage = error;
+            this.loading = false;
+          },
+        )
     }
-  }
-
+    else
+    {
+      this.customer = 
+        { "Id":"" ,"idNumber": "", "birthdate": "", "email": "", "username": "" }
+     
+    }
+    
+    }
+      
 
   onSubmit(form: NgForm) {
-    var customer: Customer = {
-      IdNumber: form.value.IdNumber,
-      Username: form.value.Username,
-      Email: form.value.Email,
-      Birthdate: form.value.Birthdate,
-
-    }
-    console.log(form.value);
-    if (this.id != 0)
-      this.customerService.onEdit(this.baseurl, customer);
-    else
-      this.customerService.onAdd(this.baseurl, customer);
-    this.router.navigateByUrl('fetch-data');
+    this.customers = [{
+      Id: this.id,
+      "idNumber": form.value.idNumber, "birthdate": form.value.birthdate
+      , "email": form.value.email, "username": form.value.username
+    }]
+    this.customerService.onEditOrAdd(this.baseurl, this.customers);
+    setTimeout(() => {
+      this.router.navigateByUrl('fetch-data');
+    },
+      2000);
+   
 
   }
 }
 
 
 export interface Customer {
-  IdNumber: number;
-  Username: string;
-  Email: string;
-  Birthdate: string;
+  Id: string;
+  idNumber: string;
+  username: string;
+  email: string;
+  birthdate: string;
 }
