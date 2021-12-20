@@ -2,33 +2,40 @@
   <h2>{{header}}</h2>
   <form (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div class="form-group">
-      <label form="">Id</label>
-      <input type="text" class="form-control" [(ngModel)]="customer.idNumber" name="idNumber" />
+      <label for="idNumber">Id</label>
+      <input type="text" class="form-control" id="idNumber"  #idNumber="ngModel" [(ngModel)]="customer.idNumber" name="idNumber" required />
+      <small class="form-text text-muted" style="color:red !important;"  *ngIf="idNumber.touched && !idNumber.valid">Enter Id Number</small>
+     
     </div>
 
     <div class="form-group">
-      <label form="">Username</label>
-      <input type="text" class="form-control" [(ngModel)]="customer.username" name="username" />
+      <label for="username">User Name</label>
+      <input type="text" class="form-control" id="username" #username="ngModel" [(ngModel)]="customer.username" name="username" required />
+      <small class="form-text text-muted" style="color:red !important;" *ngIf="username.touched && !username.valid">Enter User Name</small>
+
     </div>
 
 
     <div class="form-group">
       <label form="">Email</label>
-      <input type="text" class="form-control" [(ngModel)]="customer.email" name="email" />
+      <input type="text" class="form-control" id="email" #email="ngModel" [(ngModel)]="customer.email" name="email" />
+      <small class="form-text text-muted" style="color:red !important;" *ngIf="email.touched && !email.valid">Enter Email</small>
+
     </div>
 
 
     <div class="form-group">
-      <label form="">Birthdate</label>
-      <input type="text" class="form-control" [(ngModel)]="customer.birthdate" name="birthdate" />
+      <label form="">Phone</label>
+      <input type="text" class="form-control"  id="phone" #phone="ngModel" [(ngModel)]="customer.phone" name="phone" required />
+      <small class="form-text text-muted" style="color:red !important;" *ngIf="phone.touched && !phone.valid">Enter Phone</small>
     </div>
 
 
- 
+
     <div class="form-group">
-      <button type="submit" class="btn btn-primary "> Save</button>
+      <button type="submit" class="btn btn-primary " [disabled]="!f.valid"> Save</button>
     </div>
-
+  
   </form>
-
+  
 </div>

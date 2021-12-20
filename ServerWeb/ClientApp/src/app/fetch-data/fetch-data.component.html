@@ -7,7 +7,7 @@
       <th>id</th>
       <th>Username</th>
       <th>Email</th>
-      <th>Birthdate</th>
+      <th>phone</th>
       <th></th>
       <th></th>
     </tr>
@@ -17,7 +17,7 @@
       <td>{{ item.idNumber }}</td>
       <td>{{ item.username }}</td>
       <td>{{ item.email }}</td>
-      <td>{{ item.birthdate | date:'fullDate'}}</td>
+      <td>{{ item.phone }}</td>
       <td><a [routerLink]="['/customer',item.id]">Edit</a> </td>
       <td><a [routerLink]="['/fetch-data',item.id]">x</a></td>
     </tr>

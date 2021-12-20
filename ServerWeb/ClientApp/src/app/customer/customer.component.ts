@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CustomerService } from '../services/customer.service';
+
 
 @Component({
   selector: 'app-customer',
@@ -15,7 +16,7 @@ export class CustomerComponent implements OnInit {
   header: string;
   baseurl: string;
   customers: Customer[];
-  customer: Customer = { "Id": "", "idNumber": "", "birthdate": "", "email": "", "username": "" };
+  customer: Customer = { "Id": "", "idNumber": "", "phone": "", "email": "", "username": "" };
 
   loading: boolean = false;
   errorMessage;
@@ -50,7 +51,7 @@ export class CustomerComponent implements OnInit {
     else
     {
       this.customer = 
-        { "Id":"" ,"idNumber": "", "birthdate": "", "email": "", "username": "" }
+        { "Id": "", "idNumber": "", "phone": "", "email": "", "username": "" }
      
     }
     
@@ -60,7 +61,7 @@ export class CustomerComponent implements OnInit {
   onSubmit(form: NgForm) {
     this.customers = [{
       Id: this.id,
-      "idNumber": form.value.idNumber, "birthdate": form.value.birthdate
+      "idNumber": form.value.idNumber, "phone": form.value.phone
       , "email": form.value.email, "username": form.value.username
     }]
     this.customerService.onEditOrAdd(this.baseurl, this.customers);
@@ -79,5 +80,5 @@ export interface Customer {
   idNumber: string;
   username: string;
   email: string;
-  birthdate: string;
+  phone: string;
 }

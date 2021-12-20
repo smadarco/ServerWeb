@@ -27,8 +27,8 @@ namespace ServerWeb
         [BsonElement("email")]
         public string email { get; set; }
 
-        [BsonElement("birthdate")]
-        public DateTime birthdate { get; set; }
+        [BsonElement("phone")]
+        public string phone { get; set; }
     }
 }
 

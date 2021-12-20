@@ -58,5 +58,5 @@ export interface Customer {
   idNumber: string;
   username: string;
   email: string;
-  birthdate: string;
+  phone: string;
 }
